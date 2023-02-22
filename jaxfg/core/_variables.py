@@ -57,7 +57,7 @@ class VariableBase(abc.ABC, Generic[VariableValueType], EnforceOverrides):
         parameterization, linearized around `local_delta=zero`. Returns a tuple of
         Jacobian matrices,  one for each leaf in the variable value pytree."""
         return jax.jacfwd(
-            lambda x, local_delta: jax.tree_leaves(
+            lambda x, local_delta: jax.tree_util.tree_leaves(
                 cls.manifold_retract(x, local_delta)
             ),
             argnums=1,

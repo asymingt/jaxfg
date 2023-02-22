@@ -76,7 +76,7 @@ class FactorBase(_FactorBase, Generic[VariableValueTuple], abc.ABC, EnforceOverr
         jacobians = jax.tree_map(
             jnp.dot,
             tuple(
-                jnp.concatenate(jax.tree_leaves(tree), axis=-1)
+                jnp.concatenate(jax.tree_util.tree_leaves(tree), axis=-1)
                 for tree in reshape_leaves(
                     jax.jacfwd(self.compute_residual_vector)(variable_values),
                     (self.get_residual_dim(), -1),
